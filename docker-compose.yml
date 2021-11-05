@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  # MQTT
+  mqtt:
+    hostname: mqtt
+    image: eclipse-mosquitto:latest
+    stdin_open: true
+    tty: true
+    ports:
+      - 1883:1883
+    volumes:
+      - ./mosquitto/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  # Grafana
+  dashboard:
+    env_file: ./influxdb/env.env
+    hostname: dashboard
+    image: grafana/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - influxdb
+  # Telegraf
+  telegraf:
+    env_file: ./influxdb/env.env
+    hostname: telegraf
+    image: telegraf:latest
+    volumes:
+      - "./telegraf/tel.conf:/etc/telegraf/telegraf.conf:ro"
+    depends_on:
+      - influxdb
+  # InfluxDB
+  influxdb:
+    env_file: ./influxdb/env.env
+    hostname: influxdb
+    image: influxdb:2.0
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb
+      - ./influxdb/config:/etc/influxdb2
+    stdin_open: true
+    tty: true
+    ports:
+      - 8086:8086
