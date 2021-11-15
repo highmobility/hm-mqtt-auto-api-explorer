@@ -9,6 +9,7 @@ services:
     ports:
       - 1883:1883
     volumes:
+      - ./data-generator/capabilities:/data-example/
       - ./mosquitto/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
   # Grafana
   dashboard:
@@ -23,6 +24,7 @@ services:
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/conf:/usr/share/grafana/conf
     depends_on:
       - influxdb
   # Telegraf
@@ -32,13 +34,14 @@ services:
     image: telegraf:latest
     volumes:
       - "./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+      - "./telegraf/metric_parser.star:/usr/local/bin/myscript.star"
     depends_on:
       - influxdb
   # InfluxDB
   influxdb:
     env_file: ./influxdb/env.env
     hostname: influxdb
-    image: influxdb:2.0
+    image: influxdb:2.1
     volumes:
       - ./influxdb/data:/var/lib/influxdb
       - ./influxdb/config:/etc/influxdb2

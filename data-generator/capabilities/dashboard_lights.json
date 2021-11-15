@@ -1,0 +1,1190 @@
+{
+  "version": 1,
+  "message_id": "12345",
+  "vin": "1GCRCSEA4CZ129760",
+  "capability": "dashboard_lights",
+  "property": "dashboard_lights",
+  "timestamp": "2021-10-06T13:59:25.648943Z",
+  "data": {
+    "dashboard_lights": {
+      "dashboard_lights": [
+        {
+          "data": {
+            "name": "high_beam",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "low_beam",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hazard_warning",
+            "state": "on"
+          }
+        },
+        {
+          "data": {
+            "name": "brake_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hatch_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fuel_level",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_coolant_temperature",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "battery_charging_condition",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_oil",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "position_lights",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "front_fog_light",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "rear_fog_light",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "park_heating",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_indicator",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "service_call",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "transmission_fluid_temperature",
+            "state": "on"
+          }
+        },
+        {
+          "data": {
+            "name": "transmission_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "anti_lock_brake_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "worn_brake_linings",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "windscreen_washer_fluid",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_oil_level",
+            "state": "on"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_coolant_level",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "steering_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "esc_indication",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "brake_lights",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "adblue_level",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fuel_filter_diff_pressure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "seat_belt",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "advanced_braking",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "acc",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "trailer_connected",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "airbag",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "esc_switched_off",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "lane_departure_warning_off",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "air_filter_minder",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "air_suspension_ride_control_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "all_wheel_drive_disabled",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "anti_theft",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "blind_spot_detection",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "charge_system_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "check_fuel_cap",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "check_fuel_fill_inlet",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "check_fuel_filter",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "dc_temp_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "dc_warning_status",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_engine_idle_shutdown",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_engine_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_exhaust_fluid_system_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_exhaust_over_temp",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_exhaust_fluid_quality",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_filter_regeneration",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_particulate_filter",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "diesel_pre_heat",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "electric_trailer_brake_connection",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_cell_max_volt_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_cell_min_volt_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_charge_energy_storage_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_high_level_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_high_temperature_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_insulation_resist_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_jump_level_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_low_level_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_max_volt_veh_energy_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_min_volt_veh_energy_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_over_charge_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_poor_cell_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "ev_battery_temp_diff_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "forward_collision_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fuel_door_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hill_descent_control_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hill_start_assist_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hv_interlocking_status_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "lighting_system_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "malfunction_indicator",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "motor_controller_temp_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "park_aid_malfunction",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "passive_entry_passive_start",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "powertrain_malfunction",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "restraints_indicator_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "start_stop_engine_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "traction_control_disabled",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "traction_control_active",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "traction_motor_temp_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_pressure_monitor_system_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "water_in_fuel",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_warning_front_right",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_warning_front_left",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_warning_rear_right",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_warning_rear_left",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_warning_system_error",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "battery_low_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "brake_fluid_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "active_hood_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "active_spoiler_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "adjust_tire_pressure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "steering_lock_alert",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "anti_pollution_failure_engine_start_impossible",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "anti_pollution_system_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "anti_reverse_system_failing",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "auto_parking_brake",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "automatic_braking_deactive",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "automatic_braking_system_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "automatic_lights_settings_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "keyfob_battery_alarm",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "trunk_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "check_reversing_lamp",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "crossing_line_system_alert_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "dipped_beam_headlamps_front_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "dipped_beam_headlamps_front_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "directional_headlamps_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "directional_light_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "dsg_failing",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "electric_mode_not_available",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "electronic_lock_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_control_system_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "engine_oil_pressure_alert",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "esp_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "excessive_oil_temperature",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_front_left_flat",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_front_right_flat",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_rear_left_flat",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_rear_right_flat",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fog_light_front_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fog_light_front_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fog_light_rear_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fog_light_rear_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fog_light_front_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_front_left_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_front_left_open_high_speed",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_front_left_not_monitored",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_front_right_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_front_right_open_high_speed",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_front_right_not_monitored",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "headlights_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "headlights_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hybrid_system_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hybrid_system_fault_repaired_vehicle",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "hydraulic_pressure_or_brake_fuild_insufficient",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "lane_departure_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "limited_visibility_aids_camera",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_pressure_low",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "maintenance_date_exceeded",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "maintenance_odometer_exceeded",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "other_failing_system",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "parking_brake_control_failing",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "parking_space_measuring_system_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "place_gear_to_parking",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "power_steering_assitance_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "power_steering_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "preheating_deactivated_battery_too_low",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "preheating_deactivated_fuel_level_too_low",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "preheating_deactivated_battery_set_the_clock",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "fog_light_rear_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_rear_left_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_rear_left_open_high_speed",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_rear_left_not_monitored",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_rear_right_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "door_rear_right_open_high_speed",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_rear_right_not_monitored",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "screen_rear_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "retractable_roof_mechanism_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "reverse_light_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "reverse_light_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "risk_of_ice",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "roof_operation_impossible_apply_parking_break",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "roof_operation_impossible_apply_start_engine",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "roof_operation_impossible_temperature_too_high",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "seatbelt_passenger_front_right_unbuckled",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "seatbelt_passenger_rear_left_unbuckled",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "seatbelt_passenger_rear_center_unbuckled",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "seatbelt_passenger_rear_right_unbuckled",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "battery_secondary_low",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "shock_sensor_failing",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "side_lights_front_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "side_lights_front_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "side_lights_rear_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "side_lights_rear_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "spare_wheel_fitter_driving_aids_deactivated",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "speed_control_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "stop_light_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "stop_light_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "suspension_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "suspension_failure_reduce_speed",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "suspension_fault_limited_to_90kmh",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_pressure_sensor_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "trunk_open_high_speed",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "trunk_window_open",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "turn_signal_front_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "turn_signal_front_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "turn_signal_rear_left_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "turn_signal_rear_right_failure",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "tire_under_inflation",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "wheel_pressure_fault",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "oil_change_warning",
+            "state": "off"
+          }
+        },
+        {
+          "data": {
+            "name": "inspection_warning",
+            "state": "off"
+          }
+        }
+      ]
+    }
+  }
+}
