@@ -1,0 +1,18 @@
+{
+  "capability": "diagnostics",
+  "data": {
+    "diagnostics": {
+      "odometer": {
+        "data": {
+          "unit": "kilometers",
+          "value": 46009.4
+        },
+        "timestamp": "2021-11-17T11:22:21.000Z"
+      }
+    }
+  },
+  "message_id": "9842F43E6AA0D44483C53F69DDCA336F5E5911473B190D00C0C9BB9241C77F58",
+  "property": "odometer",
+  "version": 1,
+  "vin": "VFXXXXXXXXXXXXXXX"
+}

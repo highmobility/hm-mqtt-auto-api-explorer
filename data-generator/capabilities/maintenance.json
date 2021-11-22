@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"message_id": "12345",
-	"vehicle_id": "1GCRCSEA4CZ129760",
+	"vehicle_id": "1GCRTSEA4CZ129760",
 	"capability": "maintenance",
 	"property": "maintenance",
 	"timestamp": "2021-10-06T13:59:25.648943Z",

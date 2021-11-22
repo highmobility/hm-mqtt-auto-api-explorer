@@ -9,15 +9,10 @@ def apply(metric):
 
     # Create field keys
     for k in metric.fields.items():
-        if k[0].endswith("_data_name"):
+        if k[0].endswith("_data_name"): # debug
             print(k[0])
-            # valueFiled = metric.fields["dashboard_lights_dashboard_lights_data_state"]
-            # new_metric.fields[metric.fields.get(k)] = valueFiled
         new_metric.fields[k[0]] = k[1]
-
-
     metrics.append(new_metric)
-
-    print(metrics)
+    print(metrics) #  Debug
 
     return metrics

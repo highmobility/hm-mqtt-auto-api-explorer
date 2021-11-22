@@ -33,8 +33,8 @@ services:
     hostname: telegraf
     image: telegraf:latest
     volumes:
-      - "./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
-      - "./telegraf/metric_parser.star:/usr/local/bin/myscript.star"
+#      - "./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+      - ./telegraf/:/etc/telegraf
     depends_on:
       - influxdb
   # InfluxDB
@@ -44,7 +44,7 @@ services:
     image: influxdb:2.1
     volumes:
       - ./influxdb/data:/var/lib/influxdb
-      - ./influxdb/config:/etc/influxdb2
+#    - ./influxdb/config:/etc/influxdb2
     stdin_open: true
     tty: true
     ports:
