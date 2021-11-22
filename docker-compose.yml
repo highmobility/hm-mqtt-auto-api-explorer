@@ -49,3 +49,16 @@ services:
     tty: true
     ports:
       - 8086:8086
+  # InfluxDB 1.8
+  influxdb18:
+    hostname: influxdb18
+    image: influxdb:1.8
+    volumes:
+      - ./influxdb/18/data:/var/lib/influxdb/data
+      - ./influxdb/18/config:/etc/influxdb/
+    stdin_open: true
+    environment:
+      INFLUXDB_CONFIG_PATH: "/etc/influxdb/influxdb.conf"
+    tty: true
+    ports:
+      - 8999:8999
