@@ -23,8 +23,8 @@
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 3,
-  "iteration": 1637531281460,
+  "id": 4,
+  "iteration": 1637589161574,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -245,6 +245,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -310,7 +311,7 @@
           "measurement": "maintenance",
           "orderByTime": "ASC",
           "policy": "example-rp",
-          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"maintenance\" and r[\"_field\"]==\"maintenance_next_inspection_date_data\")\r\n  |> map(fn: (r) => ({ r with newvalue: (uint(v:uint(v: time(v: r._value )) < uint(v: now()))) }))\r\n  |> filter(fn: (r) => r.newvalue == 1 )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> unique(column: \"topic_vin\")\r\n  |> count(column: \"newvalue\")",
+          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dashboard_lights\") \r\n  |> unique(column: \"topic_vin\")\r\n  |> aggregateWindow(every: 1w, fn: first, createEmpty: false)\r\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> filter(fn: (r) => r.dashboard_lights_dashboard_lights_data_state == \"on\") \r\n  |> group(columns: [\"_time\"], mode:\"by\")\r\n  |> count(column: \"dashboard_lights_dashboard_lights_data_state\")\r\n  |> group()\r\n  |> yield(name: \"delivered\")",
           "refId": "A",
           "resultFormat": "logs",
           "select": [
@@ -348,6 +349,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -361,7 +363,7 @@
               }
             ]
           },
-          "unit": "dateTimeAsSystem"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -379,13 +381,15 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "count"
           ],
-          "fields": "/.*/",
+          "fields": "",
           "values": false
         },
-        "text": {},
-        "textMode": "auto"
+        "text": {
+          "titleSize": 1
+        },
+        "textMode": "value"
       },
       "pluginVersion": "8.2.2",
       "targets": [
@@ -399,42 +403,36 @@
             },
             {
               "params": [
-                "topic_vin"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "maintenance",
+          "measurement": "dashboard_lights",
           "orderByTime": "ASC",
-          "policy": "example-rp",
-          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"maintenance\" and r[\"_field\"]==\"maintenance_next_inspection_date_data\")\r\n  |> map(fn: (r) => ({ r with newvalue: (uint(v:uint(v: time(v: r._value )) < uint(v: now()))) }))\r\n  |> filter(fn: (r) => r.newvalue == 1 )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> unique(column: \"topic_vin\")\r\n  |> count(column: \"newvalue\")",
+          "policy": "default",
+          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dashboard_lights\") \r\n  |> unique(column: \"topic_vin\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: first, createEmpty: false)\r\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> filter(fn: (r) => r.dashboard_lights_dashboard_lights_data_state == \"on\") \r\n  |> group(columns: [\"_time\"], mode:\"by\")\r\n  |> count(column: \"dashboard_lights_dashboard_lights_data_state\")\r\n  |> group()\r\n  |> yield(name: \"delivered\")",
           "refId": "A",
-          "resultFormat": "logs",
+          "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "maintenance_next_inspection_date_data"
+                  "dashboard_lights_dashboard_lights_data_state"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "first"
               }
             ]
           ],
           "tags": [
             {
-              "key": "capability",
+              "key": "property",
               "operator": "=",
-              "value": "maintenance"
+              "value": "dashboard_lights"
             }
           ]
         }
@@ -519,7 +517,7 @@
           "groupBy": [
             {
               "params": [
-                "1d"
+                "10s"
               ],
               "type": "time"
             },
@@ -538,8 +536,8 @@
           ],
           "measurement": "diagnostics",
           "orderByTime": "ASC",
-          "policy": "example-rp",
-          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"diagnostics\" and r._field == \"diagnostics_odometer_data_value\" )\r\n  |> unique(column: \"topic_vin\")\r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> group(columns: [\"property\"])\r\n  |> sort(columns:[\"_time\", \"_value\"])\r\n  |> cumulativeSum(columns: [\"_value\"])\r\n  ",
+          "policy": "default",
+          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"diagnostics\" and r._field == \"diagnostics_odometer_data_value\" )\r\n  |> unique(column: \"topic_vin\")\r\n  |> group(columns: [\"property\"])\r\n  |> cumulativeSum(columns: [\"_value\"])\r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> sort(columns:[\"_time\"],desc: false)\r\n",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -553,10 +551,6 @@
               {
                 "params": [],
                 "type": "last"
-              },
-              {
-                "params": [],
-                "type": "cumulative_sum"
               }
             ]
           ],
@@ -568,7 +562,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${hmmqtt}",
+      "datasource": "hmmqtt-influxQL18",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -646,17 +640,17 @@
             },
             {
               "params": [
-                "null"
+                "none"
               ],
               "type": "fill"
             }
           ],
           "measurement": "maintenance",
           "orderByTime": "ASC",
-          "policy": "example-rp",
+          "policy": "autogen",
           "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"maintenance\" and r[\"_field\"]==\"maintenance_next_inspection_date_data\")\r\n  |> map(fn: (r) => ({ r with newvalue: (uint(v:uint(v: time(v: r._value )) < uint(v: now()))) }))\r\n  |> filter(fn: (r) => r.newvalue == 1 )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> unique(column: \"topic_vin\")\r\n",
           "refId": "A",
-          "resultFormat": "logs",
+          "resultFormat": "time_series",
           "select": [
             [
               {
@@ -671,17 +665,24 @@
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "capability",
-              "operator": "=",
-              "value": "maintenance"
-            }
-          ]
+          "tags": []
         }
       ],
       "title": "Vehicles with Service Due - By Month",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "maintenance.last {topic_vin: 1GCRCSEA4CZ129760}"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
       "type": "barchart"
     },
     {
@@ -823,5 +824,5 @@
   "timezone": "",
   "title": "Summary",
   "uid": "OrH6nGt7k",
-  "version": 3
-}
+  "version": 2
+}s
