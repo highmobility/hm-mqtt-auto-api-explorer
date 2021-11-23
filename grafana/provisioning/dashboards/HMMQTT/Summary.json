@@ -537,7 +537,7 @@
           "measurement": "diagnostics",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"diagnostics\" and r._field == \"diagnostics_odometer_data_value\" )\r\n  |> unique(column: \"topic_vin\")\r\n  |> group(columns: [\"property\"])\r\n  |> cumulativeSum(columns: [\"_value\"])\r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> sort(columns:[\"_time\"],desc: false)\r\n",
+          "query": "from(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"diagnostics\" and r._field == \"diagnostics_odometer_data_value\" ) \r\n  |> group(columns: [\"property\"])\r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> difference(nonNegative: true, columns: [\"_value\"])\r\n  |> cumulativeSum(columns: [\"_value\"])",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -824,5 +824,5 @@
   "timezone": "",
   "title": "Summary",
   "uid": "OrH6nGt7k",
-  "version": 2
-}s
+  "version": 4
+}

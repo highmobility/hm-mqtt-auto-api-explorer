@@ -23,3 +23,10 @@ docker compose exec influxdb influx -database telegraf --execute 'select * from 
 [Access Grafana](http://localhost:3000/d/ZZpjsHv7z)
 * username: `admin`
 * password: `admin`
+
+
+##Dashboards
+
+###Summary
+
+*Daily total distance driven* - shows distance daily difference. The first day of the data is set to zero and next day is compared to the previews day. Due that distance will be counted on next day after the day they were added.   
