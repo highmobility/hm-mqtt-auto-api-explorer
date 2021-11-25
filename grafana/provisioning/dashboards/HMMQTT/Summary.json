@@ -571,6 +571,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "axisGridShow": true,
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
@@ -583,6 +584,7 @@
             },
             "lineWidth": 1
           },
+          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -590,10 +592,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -609,7 +607,7 @@
       },
       "id": 7,
       "options": {
-        "barWidth": 0.06,
+        "barWidth": 0,
         "groupWidth": 0.7,
         "legend": {
           "calcs": [],
@@ -618,7 +616,7 @@
         },
         "orientation": "vertical",
         "showValue": "never",
-        "stacking": "none",
+        "stacking": "normal",
         "text": {
           "valueSize": 0
         },
@@ -652,7 +650,7 @@
           "measurement": "maintenance",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "import \"dict\"\r\nimport \"date\"\r\n\r\nmonths = [1:\"January\",2:\"February\",3:\"March\",4:\"April\",5:\"May\",6:\"June\",7:\"Julay\",8:\"August\",9:\"September\",10:\"October\",11:\"November\",12: \"December\" ]\r\nfrom(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\" and r[\"_field\"]==\"maintenance_next_inspection_date_data\")\r\n  |> map(fn: (r) => ({ r with service_month: dict.get( dict: months, key:date.month(t: time(v: r._value)), default: \"\") }))\r\n  |> drop(columns: [\"message_id\",\"host\",\"capability\",\"timestamp\",\"topic\",\"property\",\"topic_property\",\"topic_protocol_level\",\"version\",\"topic_action\",\"topic_capability\",\"topic_client_id\",\"_measurement\",\"_field\"])\r\n  |> unique(column: \"topic_vin\")\r\n  |> group(columns:[\"service_month\",\"count\"])\r\n  |> count(column: \"topic_vin\")\r\n  |> group()",
+          "query": "import \"dict\"\r\nimport \"date\"\r\n\r\nmonths = [1:\"January\",2:\"February\",3:\"March\",4:\"April\",5:\"May\",6:\"June\",7:\"July\",8:\"August\",9:\"September\",10:\"October\",11:\"November\",12: \"December\" ]\r\nfrom(bucket: \"something\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\" and r[\"_field\"]==\"maintenance_next_inspection_date_data\")\r\n  |> map(fn: (r) => ({ r with service_month: dict.get( dict: months, key:date.month(t: time(v: r._value)), default: \"\") }))\r\n  |> map(fn: (r) => ({ r with wmonthId:  date.month(t: time(v: r._value)) }))\r\n  |> unique(column: \"topic_vin\")\r\n  |> drop(columns: [\"message_id\",\"host\",\"capability\",\"timestamp\",\"topic\",\"property\",\"topic_property\",\"topic_protocol_level\",\"version\",\"topic_action\",\"topic_capability\",\"topic_client_id\",\"_measurement\",\"_field\"])\r\n  |> group(columns:[\"service_month\",\"wmonthId\"])\r\n  |> count(column: \"topic_vin\")\r\n  |> group()\r\n  |> sort(columns:[\"wmonthId\"])\r\n  |> map(fn: (r) => ({ r with wmonthId: string(v: r.wmonthId) }))",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -773,7 +771,7 @@
       "type": "table"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [
@@ -826,5 +824,5 @@
   "timezone": "",
   "title": "Summary",
   "uid": "OrH6nGt7k",
-  "version": 14
+  "version": 16
 }
