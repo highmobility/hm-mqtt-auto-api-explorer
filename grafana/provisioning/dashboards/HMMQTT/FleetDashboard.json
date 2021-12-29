@@ -617,7 +617,6 @@
           "tags": []
         }
       ],
-      "title": "Daily total distance driven",
       "transformations": [],
       "type": "table"
     },
@@ -807,4 +806,4 @@
   "uid": "p",
   "version": 10,
   "weekStart": ""
-}
+}s
