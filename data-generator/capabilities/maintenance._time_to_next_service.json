@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"message_id": "12345",
+	"vin": "1GCRTPEW4CZ129767",
+	"capability": "maintenance",
+	"property": "time_to_next_service",
+	"timestamp": "2021-12-27T09:59:25.648943Z",
+	"data": {
+		"time_to_next_service":{"data":{"unit":"days","value":0}}
+	}
+}

@@ -3,19 +3,22 @@ services:
   # MQTT
   mqtt:
     hostname: mqtt
-    image: eclipse-mosquitto:latest
+    image: eclipse-mosquitto:2.0.14
     stdin_open: true
     tty: true
     ports:
+      - 8883:8883
       - 1883:1883
     volumes:
       - ./data-generator/capabilities:/data-example/
       - ./mosquitto/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./tls/ca.crt:/mosquitto/ca_certificates
+      - ./tls/:/mosquitto/certs
   # Grafana
   dashboard:
     env_file: ./influxdb/env.env
     hostname: dashboard
-    image: grafana/grafana
+    image: grafana/grafana:8.3.3
     environment:
       GF_SECURITY_ADMIN_USER: "admin"
       GF_SECURITY_ADMIN_PASSWORD: "admin"
@@ -31,10 +34,11 @@ services:
   telegraf:
     env_file: ./influxdb/env.env
     hostname: telegraf
-    image: telegraf:latest
+    image: telegraf:1.21.1
     volumes:
 #      - "./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
       - ./telegraf/:/etc/telegraf
+      - ./tls/:/etc/telegraf/mqtt
     depends_on:
       - influxdb
   # InfluxDB
@@ -50,15 +54,15 @@ services:
     ports:
       - 8086:8086
   # InfluxDB 1.8
-  influxdb18:
-    hostname: influxdb18
-    image: influxdb:1.8
-    volumes:
-      - ./influxdb/18/data:/var/lib/influxdb/data
-      - ./influxdb/18/config:/etc/influxdb/
-    stdin_open: true
-    environment:
-      INFLUXDB_CONFIG_PATH: "/etc/influxdb/influxdb.conf"
-    tty: true
-    ports:
-      - 8999:8999
+#  influxdb18:
+#    hostname: influxdb18
+#    image: influxdb:1.8
+#    volumes:
+#      - ./influxdb/18/data:/var/lib/influxdb/data
+#      - ./influxdb/18/config:/etc/influxdb/
+#    stdin_open: true
+#    environment:
+#      INFLUXDB_CONFIG_PATH: "/etc/influxdb/influxdb.conf"
+#    tty: true
+#    ports:
+#      - 8999:8999

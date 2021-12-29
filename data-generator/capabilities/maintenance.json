@@ -1,19 +1,19 @@
 {
 	"version": 1,
 	"message_id": "12345",
-	"vehicle_id": "1GCRTSEA4CZ129760",
+	"vin": "1GCRTPEW4CZ129760",
 	"capability": "maintenance",
-	"property": "maintenance",
-	"timestamp": "2021-10-06T13:59:25.648943Z",
+	"property": "next_inspection_date",
+	"timestamp": "2021-12-20T13:59:25.648943Z",
 	"data": {
 		"maintenance": {
 			"next_inspection_date": {
-				"data": "2018-10-23T14:38:47.000Z"
+				"data": "2021-12-27T14:38:47.000Z"
 			},
 			"service_distance_threshold": {
 				"data": {
 					"unit": "kilometers",
-					"value": 5000
+					"value": 7000
 				}
 			}
 		}

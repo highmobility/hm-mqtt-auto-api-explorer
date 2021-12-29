@@ -4,14 +4,14 @@
   "vin": "1GCRCSEA4CZ129760",
   "capability": "dashboard_lights",
   "property": "dashboard_lights",
-  "timestamp": "2021-10-06T13:59:25.648943Z",
+  "timestamp": "2021-12-27T01:59:25.648943Z",
   "data": {
     "dashboard_lights": {
       "dashboard_lights": [
         {
           "data": {
             "name": "high_beam",
-            "state": "off"
+            "state": "on"
           }
         },
         {

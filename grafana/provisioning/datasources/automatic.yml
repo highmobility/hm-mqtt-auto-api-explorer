@@ -27,9 +27,9 @@ datasources:
       httpHeaderName1: 'Authorization'
     secureJsonData:
       httpHeaderValue1: 'Token ${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}'
-  - name: hmmqtt-influxQL18
-    type: influxdb
-    access: proxy
-    url: http://influxdb18:8999
-    # This database should be mapped to a bucket
-    database: ${DOCKER_INFLUXDB_INIT_BUCKET}
+#  - name: hmmqtt-influxQL18
+#    type: influxdb
+#    access: proxy
+#    url: http://influxdb18:8999
+#    # This database should be mapped to a bucket
+#    database: ${DOCKER_INFLUXDB_INIT_BUCKET}

@@ -1,0 +1,810 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 4,
+  "iteration": 1640775299711,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${hmmqtt}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Value$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P443A29C9FB1C27B2"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "diagnostics",
+          "orderByTime": "ASC",
+          "policy": "example-rp",
+          "query": "from(bucket: \"something\")\r\n  // range start is fixed , else it will load only selected range devices\r\n  |> range(start: -7d) \r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\r\n  |> map(fn: (r) => ({ r with  _value: 1}))\r\n  |> keep(columns: [\"_time\",\"vin\",\"_value\"]) \r\n  |> aggregateWindow(every: 1d, fn:last, createEmpty: false)\r\n  |> drop(columns: [\"vin\"])\r\n  |> aggregateWindow(every: 1m, fn:count, createEmpty: false)\r\n",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "diagnostics_odometer_data_value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Cars Connected",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${hmmqtt}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P443A29C9FB1C27B2"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "topic_vin"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "maintenance",
+          "orderByTime": "ASC",
+          "policy": "example-rp",
+          "query": "timeFrom = today()\r\ncrash = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"crash\" and r.property ==\"incidents\")  \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\ntheftAlarm = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"thief_alarm\" and r.property ==\"status\") \r\n  |> filter(fn: (r) => r._value == \"triggered\") \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\n\r\ndiagnostics = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"diagnostics\" and r.property ==\"engine_time_to_next_service\") \r\n  |> filter(fn: (r) =>  r._field == \"diagnostics_engine_time_to_next_service_hours\" and r._value <= 0)\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1h, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\n\r\nunion(tables: [crash, theftAlarm, diagnostics])\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false, column:\"vin\")\r\n  |> aggregateWindow(every: 1h, fn: sum, createEmpty: true, column:\"vin\")\r\n  |> map(fn: (r) => ({ r with vin: if exists r.vin then r.vin else 0 }))\r\n  |> yield(name: \"end\")",
+          "refId": "A",
+          "resultFormat": "logs",
+          "select": [
+            [
+              {
+                "params": [
+                  "maintenance_next_inspection_date_data"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "capability",
+              "operator": "=",
+              "value": "maintenance"
+            }
+          ]
+        }
+      ],
+      "title": "Actions Required",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${hmmqtt}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-yellow",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P443A29C9FB1C27B2"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "topic_vin"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "maintenance",
+          "orderByTime": "ASC",
+          "policy": "example-rp",
+          "query": "startTime = today()\r\nfrom(bucket: \"something\")\r\n  |> range(start: startTime)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"maintenance\" and r._field == \"time_to_next_service_days\" and r._value <= 1 ) \r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n  |> aggregateWindow(every: 1h, fn: count, createEmpty: true, column:\"vin\")\r\n  |> yield(name: \"servicesToday\")\r\n",
+          "refId": "A",
+          "resultFormat": "logs",
+          "select": [
+            [
+              {
+                "params": [
+                  "maintenance_next_inspection_date_data"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "capability",
+              "operator": "=",
+              "value": "maintenance"
+            }
+          ]
+        }
+      ],
+      "title": "Services Today",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${hmmqtt}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#85060600",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P443A29C9FB1C27B2"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "dashboard_lights",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "import \"influxdata/influxdb\"\r\nimport \"influxdata/influxdb/v1\"\r\nimport \"experimental\"\r\nimport \"date\"\r\nimport \"dict\"\r\nimport \"generate\"\r\n\r\n\r\nweekStartDate = () =>  {\r\n  weekDays = [0: 6, 1: 1, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5]\r\n  daysDuration = dict.get(dict: weekDays, key: date.weekDay(t: today()), default: 0)*24*60*60*1000000000\r\n  timeToReturn = date.truncate(t: experimental.subDuration(d: duration(v: uint(v: daysDuration )), from: now()), unit: 1d)\r\n  return timeToReturn\r\n}\r\n\r\nserviceDate = (eventDate,daysCount) =>  {\r\n  durationTime = duration(v: int(v: daysCount)*24*60*60*1000000000)\r\n  dateToReturn = date.truncate(t: experimental.addDuration(d: durationTime, to: eventDate), unit: 1d)\r\n  return dateToReturn\r\n}\r\n  \r\n\r\ndata = from(bucket: \"something\")\r\n  |> range(start: weekStartDate(), stop: experimental.addDuration(d: 6d23h59m59s, to:  weekStartDate()))\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"maintenance\") \r\n  |> filter(fn: (r) => r[\"_field\"] == \"time_to_next_service_days\") \r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> map(fn: (r) => ({ r with service_date: serviceDate(eventDate: r._time, daysCount: r._value)}))\r\n  |> keep(columns: [\"_time\",\"vin\",\"service_date\"])\r\n  |> filter(fn: (r) => r[\"service_date\"] >= weekStartDate() and  r[\"service_date\"] < experimental.addDuration(d: 7d, to:  weekStartDate())) \r\n  |> map(fn: (r) => ({ r with _time: r.service_date, day_id: date.weekDay(t: r.service_date)}))\r\n  |> group()\r\n  |> aggregateWindow(every: 1ns, fn: count, createEmpty: false, column: \"vin\")\r\n  |> map(fn: (r) => ({ r with tag: string(v: r.vin), _value: date.weekDay(t: r._time) , _time: date.truncate(t: r._time, unit: 1d)}))\r\n  |> drop(columns:[\"_start\",\"_stop\"])\r\n\r\n\r\nt1 = generate.from(count: 7, fn: (n) => n + 1, start: weekStartDate(), stop: experimental.addDuration(d: 7d, to:  weekStartDate()))\r\n    |> set(key: \"tag\", value: \"0\")\r\n    |> group()\r\n\r\nunion(tables: [data, t1])\r\n  |> drop(columns: [\"vin\"])\r\n  |> aggregateWindow(every: 1ns, fn: last, createEmpty: false, column: \"_value\")\r\n  |> map(fn: (r) => ({ r with _value: int(v: r.tag)}))\r\n  |> drop(columns:[\"_start\",\"_stop\",\"tag\"])\r\n  |> yield(name: \"end\")\r\n\r\n\r\n",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "dashboard_lights_dashboard_lights_data_state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "first"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "property",
+              "operator": "=",
+              "value": "dashboard_lights"
+            }
+          ]
+        }
+      ],
+      "title": "Services This Week",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 10,
+      "panels": [],
+      "title": "Actions Required ",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${hmmqtt}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Date/Time"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vin"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "VIN"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "xevent"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Event"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Crash Detected": {
+                        "color": "semi-dark-red",
+                        "index": 0,
+                        "text": "Crash Detected"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 3,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "_time"
+          }
+        ]
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P443A29C9FB1C27B2"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "property"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "diagnostics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "timeFrom = -10d\r\ncrash = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"crash\" and r.property ==\"incidents\")  \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> map(fn: (r) => ({ r with xevent: \"Crash Detected\" }))\r\n  |> group()\r\n\r\ntheftAlarm = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"thief_alarm\" and r.property ==\"status\") \r\n  |> filter(fn: (r) => r._value == \"triggered\") \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> map(fn: (r) => ({ r with xevent: \"Theft Alarm\" }))\r\n  |> group()\r\n\r\n\r\ndiagnostics = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"diagnostics\" and r.property ==\"engine_time_to_next_service\") \r\n  |> filter(fn: (r) =>  r._field == \"diagnostics_engine_time_to_next_service_hours\" and r._value <= 0)\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> map(fn: (r) => ({ r with xevent: \"Overdue Service\" }))\r\n  |> group()\r\n\r\n\r\nunion(tables: [crash, theftAlarm, diagnostics])\r\n  |> yield(name: \"end\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "diagnostics_odometer_data_value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Daily total distance driven",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Safe Driving",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 18,
+      "panels": [],
+      "title": "Car Usage",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 16,
+      "panels": [],
+      "title": "Car Services",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Health Status",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 12,
+      "panels": [],
+      "title": "Car Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 22,
+      "options": {
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "view": {
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "channel": "plugin/testdata/random-20Hz-stream",
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "filter": {
+            "fields": [
+              "Time",
+              "Value"
+            ]
+          },
+          "queryType": "measurements",
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "type": "geomap"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [
+    "summary"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "hmmqtt-flux"
+          ],
+          "value": [
+            "hmmqtt-flux"
+          ]
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "hmmqtt",
+        "multi": true,
+        "name": "hmmqtt",
+        "options": [],
+        "query": "influxdb",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "/hmmqtt-*/",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "hide": 2,
+        "name": "mqtt_measurement",
+        "query": "mqtt_consumer",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now/w",
+    "to": "now/w"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Fleet Dashboard",
+  "uid": "p",
+  "version": 10,
+  "weekStart": ""
+}
