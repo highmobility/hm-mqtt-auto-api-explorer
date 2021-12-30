@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": 4,
-  "iteration": 1640775299779,
+  "iteration": 1640775299793,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -56,7 +56,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 0,
         "y": 0
@@ -152,7 +152,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 6,
         "y": 0
@@ -203,7 +203,7 @@
           "measurement": "maintenance",
           "orderByTime": "ASC",
           "policy": "example-rp",
-          "query": "timeFrom = today()\r\ncrash = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"crash\" and r.property ==\"incidents\")  \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\ntheftAlarm = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"thief_alarm\" and r.property ==\"status\") \r\n  |> filter(fn: (r) => r._value == \"triggered\") \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\n\r\ndiagnostics = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"diagnostics\" and r.property ==\"engine_time_to_next_service\") \r\n  |> filter(fn: (r) =>  r._field == \"diagnostics_engine_time_to_next_service_hours\" and r._value <= 0)\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1h, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\n\r\nunion(tables: [crash, theftAlarm, diagnostics])\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false, column:\"vin\")\r\n  |> aggregateWindow(every: 1h, fn: sum, createEmpty: true, column:\"vin\")\r\n  |> map(fn: (r) => ({ r with vin: if exists r.vin then r.vin else 0 }))\r\n  |> yield(name: \"end\")",
+          "query": "timeFrom = -7d\r\ncrash = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"crash\" and r.property ==\"incidents\")  \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\ntheftAlarm = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"thief_alarm\" and r.property ==\"status\") \r\n  |> filter(fn: (r) => r._value == \"triggered\") \r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\n\r\ndiagnostics = from(bucket: \"something\")\r\n  |> range(start: timeFrom)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"diagnostics\" and r.property ==\"engine_time_to_next_service\") \r\n  |> filter(fn: (r) =>  r._field == \"diagnostics_engine_time_to_next_service_hours\" and r._value <= 0)\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> unique(column: \"_time\")\r\n  |> group()\r\n  |> aggregateWindow(every: 1h, fn: count, createEmpty: false, column:\"vin\")\r\n\r\n\r\n\r\nunion(tables: [crash, theftAlarm, diagnostics])\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false, column:\"vin\")\r\n  |> aggregateWindow(every: 1h, fn: sum, createEmpty: true, column:\"vin\")\r\n  |> map(fn: (r) => ({ r with vin: if exists r.vin then r.vin else 0 }))\r\n  |> yield(name: \"end\")",
           "refId": "A",
           "resultFormat": "logs",
           "select": [
@@ -264,7 +264,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 12,
         "y": 0
@@ -315,7 +315,7 @@
           "measurement": "maintenance",
           "orderByTime": "ASC",
           "policy": "example-rp",
-          "query": "startTime = today()\r\nfrom(bucket: \"something\")\r\n  |> range(start: startTime)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"maintenance\" and r._field == \"time_to_next_service_days\" and r._value <= 1 ) \r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n  |> aggregateWindow(every: 1h, fn: count, createEmpty: true, column:\"vin\")\r\n  |> yield(name: \"servicesToday\")\r\n",
+          "query": "startTime = -7d\r\nfrom(bucket: \"something\")\r\n  |> range(start: startTime)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"maintenance\" and r._field == \"time_to_next_service_days\" and r._value <= 1 ) \r\n  |> aggregateWindow(every: 1d, fn: last, createEmpty: false)\r\n  |> keep(columns: [\"_time\",\"vin\"])\r\n  |> group()\r\n  |> aggregateWindow(every: 1s, fn: count, createEmpty: false, column:\"vin\")\r\n  |> aggregateWindow(every: 1h, fn: count, createEmpty: true, column:\"vin\")\r\n  |> yield(name: \"servicesToday\")\r\n",
           "refId": "A",
           "resultFormat": "logs",
           "select": [
@@ -353,44 +353,71 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "fixed"
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
-          "noValue": "0",
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#85060600",
+                "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 18,
         "y": 0
       },
       "id": 5,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
         },
-        "text": {},
-        "textMode": "auto"
+        "tooltip": {
+          "mode": "single"
+        }
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -444,7 +471,7 @@
       ],
       "title": "Services This Week",
       "transformations": [],
-      "type": "stat"
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -452,7 +479,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 6
       },
       "id": 10,
       "panels": [],
@@ -548,7 +575,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 7
       },
       "id": 3,
       "options": {
@@ -626,7 +653,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 15
       },
       "id": 12,
       "panels": [],
@@ -658,13 +685,100 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "climate_outside_temperature_celsius"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Outer Temperature"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "999999": {
+                        "index": 0,
+                        "text": "NA"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vehicle_location_coordinates_data_latitude"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Latitude"
+              },
+              {
+                "id": "decimals",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vehicle_location_coordinates_data_longitude"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Longitude"
+              },
+              {
+                "id": "decimals",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vin"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "VIN"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Date"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 16,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 16
       },
       "id": 22,
       "options": {
@@ -742,7 +856,7 @@
             "type": "influxdb",
             "uid": "P443A29C9FB1C27B2"
           },
-          "query": "data = from(bucket: \"something\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"vehicle_location\") \r\n  |> keep(columns: [\"vehicle_location_coordinates_data_latitude\",\"vin\",\"vehicle_location_coordinates_data_longitude\",\"_value\",\"_field\",\"_time\"]) \r\n  |> last()\r\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> drop(columns: [\"message_id\"])\r\n  |> group()\r\n  |> yield(name: \"test\")",
+          "query": "import \"experimental\"\r\ncoordinates = from(bucket: \"something\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"vehicle_location\") \r\n  |> keep(columns: [\"vehicle_location_coordinates_data_latitude\",\"vin\",\"vehicle_location_coordinates_data_longitude\",\"_value\",\"_field\",\"_time\"]) \r\n  |> last()\r\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> drop(columns: [\"message_id\"])\r\n  |> group()\r\n\r\n\r\nclimate = from(bucket: \"something\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"climate\") \r\n  |> filter(fn: (r) => r[\"_field\"] == \"climate_outside_temperature_celsius\") \r\n  |> keep(columns: [\"climate_outside_temperature_celsius\",\"vin\",\"_value\",\"_field\",\"_time\"]) \r\n  |> last()\r\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> group()\r\n\r\n\r\nexperimental.join(left: coordinates, right: climate, fn: (left, right) => ({left with climate_outside_temperature_celsius: if exists right.climate_outside_temperature_celsius and right.vin == left.vin  then right.climate_outside_temperature_celsius else float(v: 999999) }))\r\n",
           "refId": "A"
         }
       ],
@@ -755,7 +869,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 32
       },
       "id": 20,
       "panels": [],
@@ -768,7 +882,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 33
       },
       "id": 18,
       "panels": [],
@@ -781,7 +895,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 34
       },
       "id": 16,
       "panels": [],
@@ -794,7 +908,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 35
       },
       "id": 14,
       "panels": [],
@@ -843,13 +957,13 @@
     ]
   },
   "time": {
-    "from": "now/w",
-    "to": "now/w"
+    "from": "now-2d",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Fleet Dashboard",
   "uid": "p",
   "version": 10,
-  "weekStart": ""
+  "weekStart": "monday"
 }
