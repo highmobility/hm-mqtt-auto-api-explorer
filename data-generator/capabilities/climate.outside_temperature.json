@@ -1,0 +1,11 @@
+{
+  "capability": "climate",
+  "data": {
+    "climate":{"outside_temperature":{"data":{"unit":"celsius","value":12.2}}
+  },
+  "message_id": "9842F43E6AA0D44483C53F69DDCA336F5E5911473B190D00C0C9BB9241C77F58",
+  "property": "outside_temperature",
+  "version": 1,
+  "timestamp": "2021-12-30T01:59:25.648943Z",
+  "vin": "1GCRTPEW4CZ129760"
+}

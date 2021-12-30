@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": 4,
-  "iteration": 1640775299711,
+  "iteration": 1640775299779,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -56,7 +56,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 6,
         "x": 0,
         "y": 0
@@ -152,7 +152,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 6,
         "x": 6,
         "y": 0
@@ -264,7 +264,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 6,
         "x": 12,
         "y": 0
@@ -371,7 +371,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 6,
         "x": 18,
         "y": 0
@@ -452,7 +452,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 4
       },
       "id": 10,
       "panels": [],
@@ -545,10 +545,10 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 5
       },
       "id": 3,
       "options": {
@@ -621,64 +621,12 @@
       "type": "table"
     },
     {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
-      "id": 20,
-      "panels": [],
-      "title": "Safe Driving",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 20
-      },
-      "id": 18,
-      "panels": [],
-      "title": "Car Usage",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 21
-      },
-      "id": 16,
-      "panels": [],
-      "title": "Car Services",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 22
-      },
-      "id": 14,
-      "panels": [],
-      "title": "Health Status",
-      "type": "row"
-    },
-    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 13
       },
       "id": 12,
       "panels": [],
@@ -687,8 +635,8 @@
     },
     {
       "datasource": {
-        "type": "datasource",
-        "uid": "grafana"
+        "type": "influxdb",
+        "uid": "P443A29C9FB1C27B2"
       },
       "fieldConfig": {
         "defaults": {
@@ -716,44 +664,142 @@
         "h": 16,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 14
       },
       "id": 22,
       "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "osm-standard"
+        },
         "controls": {
           "mouseWheelZoom": true,
           "showAttribution": true,
-          "showDebug": false,
-          "showScale": false,
+          "showDebug": true,
+          "showScale": true,
           "showZoom": true
         },
+        "layers": [
+          {
+            "config": {
+              "showLegend": false,
+              "style": {
+                "color": {
+                  "fixed": "dark-green"
+                },
+                "opacity": 1,
+                "rotation": {
+                  "fixed": 5,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "text": {
+                  "field": "vin",
+                  "fixed": "${{ .vin }}",
+                  "mode": "field"
+                },
+                "textConfig": {
+                  "fontSize": 17,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "top"
+                }
+              }
+            },
+            "location": {
+              "latitude": "vehicle_location_coordinates_data_latitude",
+              "longitude": "vehicle_location_coordinates_data_longitude",
+              "mode": "coords"
+            },
+            "name": "Layer 1",
+            "type": "markers"
+          }
+        ],
         "view": {
-          "id": "zero",
-          "lat": 0,
-          "lon": 0,
-          "zoom": 1
+          "id": "europe",
+          "lat": 46,
+          "lon": 14,
+          "shared": false,
+          "zoom": 4
         }
       },
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "channel": "plugin/testdata/random-20Hz-stream",
           "datasource": {
-            "type": "datasource",
-            "uid": "grafana"
+            "type": "influxdb",
+            "uid": "P443A29C9FB1C27B2"
           },
-          "filter": {
-            "fields": [
-              "Time",
-              "Value"
-            ]
-          },
-          "queryType": "measurements",
+          "query": "data = from(bucket: \"something\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\") \r\n  |> filter(fn: (r) => r[\"capability\"] == \"vehicle_location\") \r\n  |> keep(columns: [\"vehicle_location_coordinates_data_latitude\",\"vin\",\"vehicle_location_coordinates_data_longitude\",\"_value\",\"_field\",\"_time\"]) \r\n  |> last()\r\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> drop(columns: [\"message_id\"])\r\n  |> group()\r\n  |> yield(name: \"test\")",
           "refId": "A"
         }
       ],
       "title": "Panel Title",
       "type": "geomap"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Safe Driving",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 18,
+      "panels": [],
+      "title": "Car Usage",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 16,
+      "panels": [],
+      "title": "Car Services",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Health Status",
+      "type": "row"
     }
   ],
   "refresh": "",
@@ -806,4 +852,4 @@
   "uid": "p",
   "version": 10,
   "weekStart": ""
-}s
+}
