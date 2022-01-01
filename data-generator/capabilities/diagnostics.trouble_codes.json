@@ -1,0 +1,32 @@
+{
+  "capability": "diagnostics",
+  "data": {
+    "diagnostics": {
+      "trouble_codes": [
+        {
+          "data": {
+            "occurrences": 2,
+            "id": "C1116FA",
+            "ecu_id": "RDU_212FR",
+            "status": "PENDING",
+            "system": "unknown"
+          }
+        },
+        {
+          "data": {
+            "occurrences": 2,
+            "id": "C163AFA",
+            "ecu_id": "DTR212",
+            "status": "PENDING",
+            "system": "body"
+          }
+        }
+      ]
+    }
+  },
+  "message_id": "9842F43E6AA0D44483C53F69DDCA336F5E5911473B190D00C0C9BB9241C77F58",
+  "property": "trouble_codes",
+  "version": 1,
+  "timestamp": "2021-12-31T03:59:25.648943Z",
+  "vin": "1GCRTPEW4CZ129767"
+}
