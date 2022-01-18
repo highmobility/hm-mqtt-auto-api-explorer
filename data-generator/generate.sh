@@ -2,6 +2,9 @@
 set -x
 BASE_DIR=./test
 CAPABILITIES_DIR=/data-example
+
+# Use current date or define date
+#TIMESTAMP="2022-01-18T13:32:13Z"
 TIMESTAMP=$(date '+%FT%H:%M:%SZ')
 
 
