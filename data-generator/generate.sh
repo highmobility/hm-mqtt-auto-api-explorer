@@ -31,6 +31,6 @@ for i in \
   for entry in "$search_dir"/*
   do
     echo $entry
-    mosquitto_pub -h localhost -f $entry   -t "live/l13/87BAAAAAAAAAAAAAAAAA/$i/diagnostics/get/odometer"
+    mosquitto_pub -h localhost -f $entry  -t "live/l13/87BAAAAAAAAAAAAAAAAA/$i/$(echo $entry | cut -d '.' -f2 | cut -d '/' -f4 )/get/$(echo $entry | cut -d'.' -f3)"
   done
 done
