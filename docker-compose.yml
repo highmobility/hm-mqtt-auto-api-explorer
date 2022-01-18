@@ -11,9 +11,11 @@ services:
       - 1883:1883
     volumes:
       - ./data-generator/capabilities:/data-example/
+      - ./data-generator/generate.sh:/generate.sh:rw
       - ./mosquitto/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - ./tls/ca.crt:/mosquitto/ca_certificates
       - ./tls/:/mosquitto/certs
+      - ./mosquitto/data/:/mosquitto/data
   # Grafana
   dashboard:
     env_file: ./influxdb/env.env
@@ -34,7 +36,7 @@ services:
   telegraf:
     env_file: ./influxdb/env.env
     hostname: telegraf
-    image: telegraf:1.21.1
+    image: telegraf:1.21.2
     volumes:
 #      - "./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
       - ./telegraf/:/etc/telegraf

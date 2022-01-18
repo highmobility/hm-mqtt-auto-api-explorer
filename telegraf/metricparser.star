@@ -2,8 +2,10 @@ load("json.star", "json")
 load("time.star", "time")
 load("logging.star", "log")
 def apply(metric):
+
     metrics = []
     new_metric = Metric(metric.name)
+    print(metric)
     propertyName = metric.tags["capability"]+"_"+ metric.tags["property"]+"_"
     timestampField = propertyName+"timestamp"
 

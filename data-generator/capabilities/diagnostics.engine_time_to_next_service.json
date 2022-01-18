@@ -2,12 +2,12 @@
   "capability": "diagnostics",
   "data": {
     "diagnostics": {
-      "engine_time_to_next_service":{"data":{"unit":"hours","value": 1}}
+      "engine_time_to_next_service":{"data":{"unit":"hours","value": 0}}
     }
   },
   "message_id": "9842F43E6AA0D44483C53F69DDCA336F5E5911473B190D00C0C9BB9241C77F58",
   "property": "engine_time_to_next_service",
   "version": 1,
-  "timestamp": "2021-12-27T02:59:25.648943Z",
-  "vin": "1GCRTPEW4CZ129764"
+  "timestamp": "__TIMESTAMP__",
+  "vin": "__VIN__"
 }

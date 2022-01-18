@@ -1,10 +1,10 @@
 {
   "version": 1,
   "message_id": "12345",
-  "vin": "1GCRCSEA4CZ129760",
+  "vin": "__VIN__",
   "capability": "dashboard_lights",
   "property": "dashboard_lights",
-  "timestamp": "2021-12-27T01:59:25.648943Z",
+  "timestamp": "__TIMESTAMP__",
   "data": {
     "dashboard_lights": {
       "dashboard_lights": [

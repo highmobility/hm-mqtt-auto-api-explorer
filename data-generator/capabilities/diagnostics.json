@@ -7,12 +7,13 @@
           "unit": "kilometers",
           "value": 8050.4
         },
-        "timestamp": "2021-12-20T21:22:21.000Z"
+        "timestamp": "__TIMESTAMP__"
       }
     }
   },
   "message_id": "9842F43E6AA0D44483C53F69DDCA336F5E5911473B190D00C0C9BB9241C77F58",
   "property": "odometer",
   "version": 1,
-  "vin": "1GCRTPEW4CZ129760"
+  "timestamp": "__TIMESTAMP__",
+  "vin": "__VIN__"
 }

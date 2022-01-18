@@ -3,15 +3,12 @@
 	"message_id": "12345",
 	"vin": "__VIN__",
 	"capability": "maintenance",
-	"property": "service_distance_threshold",
+	"property": "next_inspection_date",
 	"timestamp": "__TIMESTAMP__",
 	"data": {
 		"maintenance": {
-			"service_distance_threshold": {
-				"data": {
-					"unit": "kilometers",
-					"value": 7000
-				}
+			"next_inspection_date": {
+				"data": "2022-01-27T14:38:47.000Z"
 			}
 		}
 	}
