@@ -39,6 +39,33 @@ to
   ]
 ```
 to subscribe also ```test/hello``` topic events
+
+### Enabling Telegraf MQTT Auto API broker TLS communication
+* Download MQTT Auto API broker client certificates ( instructions here https://docs.high-mobility.com/guides/getting-started/mqtt/ )
+* Extract certificates into [./tls/](./tls) directory
+  * this directory is mounted to Telegraf and also to mqtt container
+  * You should have following files:
+    * <client-id>-ca_certificates.pem
+    * <client-id>-certificate.pem.crt
+    * <client-id>-private.pem.key
+* In the Telegraf mqtt_consumer plugin configuration do following changes:
+```
+[[inputs.mqtt_consumer]]
+  # TLS Configuration
+  
+  tls_ca = "/etc/telegraf/mqtt/<client-id>-ca_certificates.pem"
+  tls_cert = "/etc/telegraf/mqtt/<client-id>-certificate.pem.crt"
+  tls_key = "/etc/telegraf/mqtt/<client-id>-private.pem.key"
+  
+  ## Use TLS but skip chain & host verification
+  # insecure_skip_verify = false
+
+  persistent_session = true
+  client_id = "<client-id>" # Do not forget to define your clientId
+  servers = ["ssl://mqtt.high-mobility.com:8883"]
+  ...
+```
+ 
 ### Publish Messages:
 
 ```
