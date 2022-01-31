@@ -13,7 +13,6 @@ services:
       - ./data-generator/capabilities:/data-example/
       - ./data-generator/generate.sh:/generate.sh:rw
       - ./mosquitto/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./tls/ca.crt:/mosquitto/ca_certificates
       - ./tls/:/mosquitto/certs
       - ./mosquitto/data/:/mosquitto/data
   # Grafana
@@ -36,7 +35,7 @@ services:
   telegraf:
     env_file: ./influxdb/env.env
     hostname: telegraf
-    image: telegraf:1.21.2
+    image: telegraf:1.21.3
     volumes:
       - ./telegraf/:/etc/telegraf
       - ./tls/:/etc/telegraf/mqtt
@@ -53,16 +52,3 @@ services:
     tty: true
     ports:
       - 8086:8086
-  # InfluxDB 1.8
-#  influxdb18:
-#    hostname: influxdb18
-#    image: influxdb:1.8
-#    volumes:
-#      - ./influxdb/18/data:/var/lib/influxdb/data
-#      - ./influxdb/18/config:/etc/influxdb/
-#    stdin_open: true
-#    environment:
-#      INFLUXDB_CONFIG_PATH: "/etc/influxdb/influxdb.conf"
-#    tty: true
-#    ports:
-#      - 8999:8999
