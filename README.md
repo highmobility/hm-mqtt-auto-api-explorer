@@ -1,54 +1,48 @@
+# High Mobility MQTT fleet dashboard sample
 
-## Setup
-Make sure you have installed Docker Engine / Docker Desktop: https://docs.docker.com/get-docker/
+This repo includes a sample Docker app, which uses the High Mobility MQTT broker to receive connected car data and that presents the vehicle health status in a fleet dashboard.
+
+The project is set up by three main components:
+
+1. Telegraf MQTT client that consumes the [MQTT broker](https://docs.high-mobility.com/guides/getting-started/mqtt/) from High Mobility and parses the Auto API data format
+2. InfluxDB that persists all vehicle data that is being streamed to Telegraf
+3. Grafana with a customized fleet dashboard to visualise the car data and to create notification rules based vehicle events
+
+<img src="fleet-dashboard.png"/>
+
+## Getting started
+
+### Install Docker
+Make sure you have installed Docker Engine/Docker Desktop. You can get it from: https://docs.docker.com/get-docker/
 
 ### Credentials
-At the moment all access credentials are coming from InfluxDB environment variables configuration
-* modify influxdb setup parameters in [env.env](./influxdb/env.env)
-  * token, org, bucket are reused in telegraf configuration and in the grafana provisioning
+All access credentials are coming from the InfluxDB environment configuration:
+
+* Modify influxdb setup parameters in [env.env](./influxdb/env.env) to configure your own
+* Token, org, bucket are reused in the telegraf configuration and in the grafana provisioning
   
 #### InfluxDB
 Login: [Access InfluxDB](http://localhost:8086)
 * username: [DOCKER_INFLUXDB_INIT_USERNAME](./influxdb/env.env)
 * password: [DOCKER_INFLUXDB_INIT_PASSWORD](./influxdb/env.env)
 
-
 #### Grafana 
 Login: [Access Grafana](http://localhost:3000/d/p/fleet-dashboard?orgId=1)
-* username: `admin`
-* password: `admin`
 
-### Docker Compose Deploy
-Start all services:
-```
-docker compose up
-```
-### Modify Telegraf topic filter:
-Telegraf topic filter set to: ```live/# ```. This will match all topics that start with ```live/```
-You can modify Telegraf filter here: [telegraf.conf](./telegraf/telegraf.conf)
-```
-  topics = [
-    "live/#"
-  ]
-```
-to
-```
-  topics = [
-    "live/#",
-    "test/hello"
-  ]
-```
-to subscribe also ```test/hello``` topic events
+* Default username: `admin`
+* Default password: `admin`
 
-### Enabling Telegraf MQTT Auto API broker TLS communication
-* Download MQTT Auto API broker client certificates ( instructions here https://docs.high-mobility.com/guides/getting-started/mqtt/ )
-* Extract certificates into [./tls/](./tls) directory
-  * this directory is mounted to Telegraf and also to mqtt container
+### High Mobility MQTT broker TLS
+Authentication to the MQTT broker and the High Mobility platform is done with certificates. Follow these steps to configure Telegraf with your application credentials.
+
+* Download MQTT broker client certificates: [See instructions in our docs](https://docs.high-mobility.com/guides/getting-started/mqtt/)
+* Extract certificates into the [./tls/](./tls) directory
+  * This directory is mounted to Telegraf and also to the MQTT container
   * You should have following files:
     * <client-id>-ca_certificates.pem
     * <client-id>-certificate.pem.crt
     * <client-id>-private.pem.key
-* In the Telegraf mqtt_consumer plugin configuration do following changes:
+* Lastly make these changes in the Telegraf mqtt_consumer plugin configuration:
 ```
 [[inputs.mqtt_consumer]]
   # TLS Configuration
@@ -65,54 +59,64 @@ to subscribe also ```test/hello``` topic events
   servers = ["ssl://mqtt.high-mobility.com:8883"]
   ...
 ```
- 
-### Publish Messages:
 
+### Docker Compose Deploy
+Start all services:
 ```
-docker compose exec mqtt mosquitto_pub -h localhost -m '{"n": 19}' -t "live/there"
-```
-
-Publish Messages with script ( [generate.sh](./data-generator/generate.sh) ):
-
-```
-docker compose exec mqtt sh generate.sh
+docker compose up
 ```
 
+## Fleet Dashboard
+The fleet dashboard is set up with the following panels:
 
-
-
-##Dashboards
-Following dashboards are provided with the repository
-### Fleet Overview
-#### General
+### General
 Panels:
+
  * Cars Connected 
  * Actions Required
  * Services Today
  * Services This Week
 
-#### Actions Required
- Table panel that presents following events:
+### Actions Required
+Table panel that presents following events:
+ 
  * Crash incidents
  * Service overdue
- * Theft Alarm
+ * Theft alarm
 
-#### Car Overview
- Map panel where cars are shown on world map. As additional information car location outer temperature is displayed.
+### Car Overview
+Map panel where all vehicles are shown on a world map. As additional information the car location outside temperature is displayed when selecting a vehicle.
 
-#### Health Status 
+### Health Status 
 Panels:
+
  * Overall - problematic cars count with overall % of total cout of cars 
  * Cars with warning lights
  * Cars with trouble codes
 
 #### Car Services 
 Panels:
+
  * Today
  * Services
  * Inspection
  * Oil Changes
- 
-### Summary
 
-*Daily total distance driven* - shows distance daily difference. The first day of the data is set to zero and next day is compared to the previews day. Due that distance will be counted on next day after the day they were added.   
+## Demo data
+It's possible to generate demo data by running the following script, which will publish MQTT messages for Telegraf.
+
+Publish Messages with script: ([generate.sh](./data-generator/generate.sh)):
+
+```
+docker compose exec mqtt sh generate.sh
+```
+
+## Modify Telegraf topic filter
+The Telegraf topic filter is set to: ```live/# ```. This will match all topics that start with ```live/```
+If needed, you can modify Telegraf filter here and set any specific topic path that you are interested in: [telegraf.conf](./telegraf/telegraf.conf)
+
+```
+  topics = [
+    "{environment}/{auto_api_level}/{app_id}/{vin}/{capability}/{action}/{property}"
+  ]
+```
