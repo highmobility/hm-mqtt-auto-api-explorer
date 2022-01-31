@@ -1,7 +1,0 @@
-FROM influxdb:2.0
-USER root
-RUN influx org create -n test \
-    && influx bucket create -n high-mobility -o test -r 72h \
-    && influx user create -n telegraf -o test \
-    && influx org members add --member telegraf --name tests
-USER influx

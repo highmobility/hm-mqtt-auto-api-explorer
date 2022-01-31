@@ -5,7 +5,6 @@ def apply(metric):
 
     metrics = []
     new_metric = Metric(metric.name)
-    print(metric)
     propertyName = metric.tags["capability"]+"_"+ metric.tags["property"]+"_"
     timestampField = propertyName+"timestamp"
 
@@ -36,15 +35,10 @@ def apply(metric):
     if ( fieldTimestamp==False and metric.tags.get("timestamp")!=None):
 
         new_metric.time = time.parse_time(metric.tags["timestamp"]).unix_nano
-        print(new_metric.time)
-
-
-
 
     # Add all tags to the new metric
     for k, v in metric.tags.items():
         new_metric.tags[k] = v
 
     metrics.append(new_metric)
-    print(metrics)
     return metrics
