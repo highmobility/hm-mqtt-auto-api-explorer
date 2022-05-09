@@ -19,7 +19,7 @@ services:
   dashboard:
     env_file: ./influxdb/env.env
     hostname: dashboard
-    image: grafana/grafana:8.3.5
+    image: grafana/grafana:8.5.2
     environment:
       GF_SECURITY_ADMIN_USER: "admin"
       GF_SECURITY_ADMIN_PASSWORD: "admin"
@@ -35,7 +35,7 @@ services:
   telegraf:
     env_file: ./influxdb/env.env
     hostname: telegraf
-    image: telegraf:1.21.3
+    image: telegraf:1.22.3
     volumes:
       - ./telegraf/:/etc/telegraf
       - ./tls/:/etc/telegraf/mqtt
@@ -45,7 +45,7 @@ services:
   influxdb:
     env_file: ./influxdb/env.env
     hostname: influxdb
-    image: influxdb:2.1
+    image: influxdb:2.2.0
     volumes:
       - ./influxdb/data:/var/lib/influxdb
     stdin_open: true
