@@ -1,5 +1,21 @@
+# This file is only used for development purpose
 version: '3.9'
 services:
+  # MQTT
+  mqtt:
+    hostname: mqtt
+    image: eclipse-mosquitto:2.0.14
+    stdin_open: true
+    tty: true
+    ports:
+      - 8883:8883
+      - 1883:1883
+    volumes:
+      - ./data-generator/capabilities:/data-example/
+      - ./data-generator/generate.sh:/generate.sh:rw
+      - ./mosquitto/conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./tls/:/mosquitto/certs
+      - ./mosquitto/data/:/mosquitto/data
   # Grafana
   dashboard:
     env_file: ./influxdb/env.env
